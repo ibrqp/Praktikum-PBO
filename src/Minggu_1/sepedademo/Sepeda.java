@@ -1,4 +1,4 @@
-package sepedademo;
+package Minggu_1.sepedademo;
 public class Sepeda {
     private String merek;
     private int kecepatan;

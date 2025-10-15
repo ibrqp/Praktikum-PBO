@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Game True/False</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      text-align: center;
+      width: 500px;
+      position: relative;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+    #question {
+      font-size: 20px;
+      margin: 20px 0;
+      font-weight: bold;
+      color: #444;
+    }
+    button {
+      padding: 12px 28px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .true-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .false-btn {
+      background-color: #f44336;
+      color: white;
+    }
+    .next-btn {
+      background-color: #007BFF;
+      color: white;
+      display: none; /* awalnya disembunyikan */
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #explanation {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #555;
+    }
+    #score {
+      font-weight: bold;
+      color: #007BFF;
+    }
+    .header {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(to right, red, white);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"></div>
+    <h2>Game True/False</h2>
+    <p id="question"></p>
+    <button class="true-btn" onclick="answer(true)">True</button>
+    <button class="false-btn" onclick="answer(false)">False</button>
+    <p id="result"></p>
+    <p id="explanation"></p>
+    <!-- Tombol Next -->
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+  </div>
+
+  <script>
+    const questions = [
+      { 
+        q: "Apakah UUD 1945 adalah sumber hukum tertinggi di Indonesia?", 
+        a: true,
+        exp: "UUD 1945 merupakan hukum tertinggi sebagai dasar segala peraturan di Indonesia." 
+      },
+      { 
+        q: "Apakah KUHP mengatur tentang hukum perdata?", 
+        a: false,
+        exp: "KUHP adalah Kitab Undang-Undang Hukum Pidana, bukan hukum perdata." 
+      },
+      { 
+        q: "Apakah Mahkamah Konstitusi berwenang menguji undang-undang terhadap UUD 1945?", 
+        a: true,
+        exp: "MK berwenang menguji undang-undang agar sesuai dengan UUD 1945." 
+      },
+      { 
+        q: "Apakah Peraturan Pemerintah lebih tinggi dari Undang-Undang?", 
+        a: false,
+        exp: "Undang-Undang lebih tinggi kedudukannya daripada Peraturan Pemerintah." 
+      },
+      { 
+        q: "Apakah Korupsi termasuk tindak pidana khusus yang diatur dalam UU tersendiri?", 
+        a: true,
+        exp: "Korupsi diatur dalam UU Tipikor, bukan hanya KUHP biasa." 
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function showQuestion() {
+      if (current < questions.length) {
+        document.getElementById("question").innerText = questions[current].q;
+        document.getElementById("result").innerText = "";
+        document.getElementById("explanation").innerText = "";
+        document.getElementById("nextBtn").style.display = "none"; // sembunyikan next dulu
+      } else {
+        document.getElementById("question").innerText = "Game selesai!";
+        document.getElementById("result").innerText = "Jawaban Yang Benar: " + score + "/" + questions.length;
+        document.getElementById("explanation").innerText = "";
+        document.getElementById("nextBtn").style.display = "none";
+      }
+    }
+
+    function answer(userAnswer) {
+      if (current < questions.length) {
+        if (userAnswer === questions[current].a) {
+          score++;
+          document.getElementById("result").innerText = "✅ Benar!";
+          document.getElementById("result").style.color = "green";
+        } else {
+          document.getElementById("result").innerText = "❌ Salah!";
+          document.getElementById("result").style.color = "red";
+        }
+        document.getElementById("explanation").innerText = questions[current].exp;
+
+        // munculkan tombol next setelah menjawab
+        document.getElementById("nextBtn").style.display = "inline-block";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      showQuestion();
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
